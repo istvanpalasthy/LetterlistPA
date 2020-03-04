@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace LetterList
+{
+    class OnlyNewMovies : MovieConsumer
+    {
+        Movies film = new Movies();
+        public OnlyNewMovies(string question) : base(question)
+        {
+        }
+
+        public override string SuggestMovie(List<Movies> MovieList)
+        {
+            Random rnd = new Random();
+            var returnlist = new List<Movies>();
+            foreach (var item in MovieList)
+            {
+                if (item.Releaseyear > 2010 && item.Releaseyear < 2020)
+                {
+                    returnlist.Add(item);
+                }
+            }
+            if (MovieList == null)
+            {
+                throw new NoFileException();
+            }
+            int randomnumber = rnd.Next(returnlist.Count);
+            return "You should probably see " + returnlist[randomnumber].Name;
+        }
+    }
+}
